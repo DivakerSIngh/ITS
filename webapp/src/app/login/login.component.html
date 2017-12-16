@@ -1,0 +1,85 @@
+<body>
+    <div class="parentDiv">
+        <div class="loginDiv">
+            <div class="mainDiv">
+
+                <div class="">
+                    <div class="loginmodal-container">
+                        <h1>Login to Your Account</h1><br>
+                        <span style="color: red;font-family: cursive;">{{loginError}}</span>
+                        <form class="login-form" name="form" novalidate>
+
+                            <label for="username" style="margin-left: 3px;position: absolute;line-height:3;" class="fa fa-user input-icon"></label>
+
+
+                            <input type="text" name="user" placeholder="Username" class="inputClass" />
+                            <label for="password" style="margin-left: 3px;position: absolute;line-height:3;" class="fa fa-lock"></label>
+                            <input type="password" name="pass" class="inputClass" placeholder="Password" />
+                            <button class="btn btn-primary btn-block" (click)="login()">Login
+                <i class="fa fa-sign-in fa-lg"></i></button>
+                            <input type="submit " name="login " class="login loginmodal-submit " value=" " data-dismiss="modal " #closeBtn style="display:none; " />
+                        </form>
+
+                        <div class="login-help ">
+                            <a href="# ">Forgot Password</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="signUpDiv">
+            <section class="signUp-content">
+                <form class="login-form" action="index.html">
+                    <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>Register</h3>
+                    <div class="clearfix">
+                        <div class="userImageDiv">
+
+                            <img src="assets/img/dp.jpg" class="userImage" />
+                            <input type="file" />
+
+
+
+                        </div>
+                        <div class="existing-user-outer">
+                            <div class="text-box-outer">
+                                <input data-val="true" data-val-maxlength="UserName must not be larger than 50 characters" data-val-maxlength-max="50" data-val-required="Please enter UserName" id="txtUserName" name="User.UserName" placeholder="User Name" type="text" value="">
+                                <label class="lbl-common">User Name</label>
+
+                            </div>
+
+                            <div class="text-box-outer">
+                                <input data-val="true" data-val-maxlength="EmailId must not be larger than 100 characters" data-val-maxlength-max="50" data-val-regex="Invalid Email Address" data-val-regex-pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" data-val-required="Please enter Email"
+                                    id="txtEmailId" name="User.Email" placeholder="Email" type="text" value="">
+                                <label class="lbl-common">Email</label>
+
+                            </div>
+                        </div>
+
+                        <div class="text-box-outer">
+                            <input placeholder="Organization" type="text" value="">
+                            <label class="lbl-common">Organization</label>
+
+                        </div>
+
+                        <div class="text-box-outer">
+                            <input placeholder="Password" type="password">
+                            <label class="lbl-common">Password</label>
+
+                        </div>
+                        <div class="text-box-outer">
+                            <input placeholder="Verify Password" type="password">
+                            <label class="lbl-common">Verify Password</label>
+
+                        </div>
+                        <div class="text-box-outer">
+                            <button class="btn btn-primary btn-block">Register
+                <i class="fa fa-sign-in fa-lg"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</body>

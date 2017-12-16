@@ -1,0 +1,40 @@
+.owl-item.active {
+    width: 262.667px;
+    margin-right: 10px;
+    background: rgba(0, 239, 118, 0.92);
+    padding: 13px;
+    color: black;
+    border-radius: 7px;
+}
+
+.progress.active.m-xxxs {
+    background: rgba(16, 255, 0, 0.84);
+    height: 11px;
+}
+
+.projectAction {
+    color: black;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.projectAction [class^="pe-7s-"],
+[class*=" pe-7s-"] {
+    font-weight: bold !important;
+}
+
+.maindiv {
+    padding: 5px;
+}
+
+.owl-item.active {
+    /*background: linear-gradient(rgba(232, 44, 44, 0.72), rgba(255, 141, 0, 0.44));*/
+    background: linear-gradient(rgba(116, 236, 55, 0.75), rgba(145, 230, 164, 0.42));
+    /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(rgba(232, 44, 44, 0.72), rgba(255, 141, 0, 0.44));
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(rgba(232, 44, 44, 0.72), rgba(255, 141, 0, 0.44));
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(red, yellow);
+}

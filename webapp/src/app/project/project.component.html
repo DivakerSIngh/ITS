@@ -1,0 +1,144 @@
+<script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+<div class="page-title">
+    <div>
+        <p>Project</p>
+    </div>
+    <div>
+        <input type="text" class="button-search" /><a class="search-bar"><i class="pe-7s-search"></i></a>
+       
+        <a href="#costumModal3" role="button" class="btn btn-primary icon-btn" data-toggle="modal">
+                <i class="fa fa-fw fa-lg fa-check-circle"></i> Add project
+            </a>
+        <!-- <a href="#costumModal3" role="button" class="btn btn-primary icon-btn" data-toggle="modal">
+            <i class="fa fa-fw fa-lg fa-check-circle"></i> Add project
+        </a> -->
+
+        <!--<button class="btn btn-primary icon-btn" type="button">
+  <i class="fa fa-fw fa-lg fa-check-circle"></i>Add Project</button>-->
+
+        &nbsp;&nbsp;&nbsp;
+        <a class="btn btn-default icon-btn" href="#"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+    </div>
+</div>
+<div *ngFor="let item of customList">
+
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box transition" style="background-size: cover;background-image: url(../assets/img/body.jpg);" [ngClass]="getDynamicClass(item.Count)">
+            <div class="inner">
+                <div style="float: right;">
+                    <a class="projectAction"><i class="pe-7s-share"></i></a>
+                    <a class="projectAction"><i class="pe-7s-note"></i></a>
+                    <a class="projectAction"><i class="pe-7s-close"></i></a>
+                </div>
+                <h3 class="ng-binding"> {{item.Id}}</h3>
+                <p>{{item.DisplayText}} </p>
+            </div>
+            <div class="icon">
+                <i class="pe-7s-hotel"></i>
+            </div>
+            <a [routerLink]="['/search-list']" [queryParams]="{q:item.Id}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>
+
+
+<div id="costumModal3" class="modal" data-easein="flipYIn" tabindex="-1" role="dialog" aria-labelledby="costumModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            ×
+                        </button>
+                <h4 class="modal-title">
+                    Add Project
+                </h4>
+            </div>
+            <div class="modal-body-s">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-xxxs">
+                    <form id="saveProjectForm" novalidate="novalidate">
+                        <div class="in row">
+                            <div class="col-xs-12 col-sm-7 col-md-12 col-lg-7 p-xxxs">
+                                <div class="column">
+                                    <div class="form-group formtxt pd">
+                                        <label for="projectname" data-attributeid="ProjectProjectName">Name</label>
+                                        <input type="text" data-attributeid="ProjectProjectName" class="form-control" id="projectname" name="projectname" placeholder="Name">
+                                        <span class="errorValidation"></span>
+            
+                                    </div>
+                                    <div class="form-group formtxt pd project-details-select">
+                                        <label data-attributeid="ProjectGroupName">Group Name</label>
+                                            <select class="select2me form-control select2-hidden-accessible" style="width:100% !important" id="projectGroup" name="projectGroup" tabindex="-1" aria-hidden="true">
+                                                <option value="4061">Mobile App</option><option value="4075">Group a</option><option value="4076">Group b</option>
+                                                <option value="4084">appInventiv</option></select>
+                                                
+                                            <!-- <a href="#add-group" data-toggle="modal" class="input-group-addon btn btn-info btn-sm"><i class="fa fa-plus"></i></a> -->
+                                        <span class="errorValidation"></span>
+                                      
+                                    </div>
+                                    <div class="form-group formtxt m-b-l pd">
+                                        <label for="status" data-attributeid="ProjectLifeCycleStateName">Status</label>
+                                      
+                                        <select class="select2me form-control select2-hidden-accessible" id="status" name="status" tabindex="-1" aria-hidden="true">
+                                            <option value="25388">Not Started</option><option value="25389">In Progress</option><option value="25390">Closed</option></select>
+                                            
+                                        <span class="errorValidation"></span>
+                                    </div>
+                                    <div class="form-group formtxt m-b-l pd">
+                                        <label data-attributeid="ProjectCoverColor">Cover Color</label>
+                                        <div class="color-picker">
+                                            <div class="input-group colorpicker-component colorpicker-element">
+                                                <a href="#cover-color" data-toggle="modal" class="form-control cover-color-selector" style="border:0px">
+                                                    <input type="hidden" class="form-control" id="txtcoverColor" name="txtcoverColor" value="#48c9b0">
+                                                    <div style="width:38px;height:30px">
+                                                        <span class="input-group-addon" id="project-cover-color" style="height: 32px; border-radius: 5px; border-right: 1px solid rgb(204, 204, 204); background-color: rgb(72, 201, 176);"></span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                    <div class="form-group formtxt pd RangeSlider-drive m-b-m m-t-elg">
+                                        <label class="range">Percentage Complete:  60%</label>
+                                    </div>
+            
+                                
+                                   
+                                    <div class="form-group formtxt pd">
+                                            <label>Report Manager</label>
+                                            <div>
+                                                    <select class="select2me form-control select2-hidden-accessible" id="status" name="status" tabindex="-1" aria-hidden="true">
+                                                            <option value="25388">Not Started</option><option value="25389">In Progress</option><option value="25390">Closed</option></select>
+                                            </div>
+                                        </div>
+                                   
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-5 col-md-12 col-lg-5 p-xxxs">
+                                <div class="column border-rn upload-imagesec">
+                                     <label>Upload Cover Image: </label>
+                                     <span class="input-label m-b-xs">( image not more than 2MB. in (.png and .jpeg))</span>
+                                    <figure class="image">
+                                            <img [src]="logo" style="width: 173px;height: 91px;margin: 5px;" alt="Preivew"> 
+                                    </figure>                                             
+                                    <div class="buttonsub">
+                                        <input type="file" (change)="onFileChange($event)" multiple="" accept="image/*" class="browse-input" name="files[]" id="docfileupload">   
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
+                            Close
+                        </button>
+                <button class="btn btn-primary">
+                            Save changes
+                        </button>
+            </div>
+        </div>
+    </div>
+</div>
