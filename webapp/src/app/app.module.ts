@@ -9,6 +9,7 @@ import{DashboardComponent}  from './dashboard/dashboard.component'
 import { LoginComponent } from './login/login.component';
 import { GlobalEventsManager } from '../GlobalEventsManager';
 import { AlertService, AuthenticationService, UserService } from './service/index';
+import { ApplicationHeader} from './service/Base.Service';
 import { MemberComponent } from './member/member.component';
 import { TaskComponent } from './task/task.component';
 import { RfiComponent } from './rfi/rfi.component';
@@ -19,6 +20,7 @@ import { ProjectComponent } from './project/project.component';
 import { IssueComponent } from './issue/issue.component';
 import { ChartComponent } from './chart/chart.component';
 import { ChartsModule } from 'ng2-charts';
+import{LoaderService} from './service/comman/loader.service';
 
 
 
@@ -49,7 +51,7 @@ import { ChartsModule } from 'ng2-charts';
       //     apiKey: 'AIzaSyBlvmXi0cL76v48MHEAZDAyAPRU94ZCWOE'
       // })
   ],
-  providers: [AuthenticationService, UserService, AlertService, GlobalEventsManager
+  providers: [AuthenticationService,LoaderService, ApplicationHeader,UserService, AlertService, GlobalEventsManager
   ],
    bootstrap: [AppComponent]
 })

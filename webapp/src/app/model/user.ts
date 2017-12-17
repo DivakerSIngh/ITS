@@ -1,15 +1,10 @@
 ﻿export class User {
-    Id: number
-    Name: string
-    Email: string
-    Mobile: number
-    StateId: number
-    CityId: number
-    Address: string
-    Password: string
-    _userList: User[]
+    userName: String
+    email: String
+    organizationId: String
+    password: String
+    mobileNo: String
+    image: String
+    organization:any
 }
 
-//export class UserList {
-//    _userList: User[];
-//}

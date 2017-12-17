@@ -31,51 +31,49 @@
 
         <div class="signUpDiv">
             <section class="signUp-content">
-                <form class="login-form" action="index.html">
+                <form class="login-form" (ngSubmit)="signUp(userdetail)" #frmsignUp="ngForm" novalidate>
                     <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>Register</h3>
                     <div class="clearfix">
                         <div class="userImageDiv">
-
                             <img src="assets/img/dp.jpg" class="userImage" />
                             <input type="file" />
-
-
-
                         </div>
                         <div class="existing-user-outer">
                             <div class="text-box-outer">
-                                <input data-val="true" data-val-maxlength="UserName must not be larger than 50 characters" data-val-maxlength-max="50" data-val-required="Please enter UserName" id="txtUserName" name="User.UserName" placeholder="User Name" type="text" value="">
+                                <input id="txtUserName" name="userName" placeholder="User Name" type="text" required #userNameRef="ngModel" [(ngModel)]="userdetail.userName">
                                 <label class="lbl-common">User Name</label>
 
                             </div>
 
                             <div class="text-box-outer">
-                                <input data-val="true" data-val-maxlength="EmailId must not be larger than 100 characters" data-val-maxlength-max="50" data-val-regex="Invalid Email Address" data-val-regex-pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" data-val-required="Please enter Email"
-                                    id="txtEmailId" name="User.Email" placeholder="Email" type="text" value="">
+                                <input id="txtEmailId" name="email" placeholder="Email" type="text" #emailRef="ngModel" [(ngModel)]="userdetail.email">
                                 <label class="lbl-common">Email</label>
 
+                            </div>
+                            <div class="text-box-outer">
+                                <input id="txtMobileno" name="mobileNo" placeholder="Mobile No" type="text" #mobileNoRef="ngModel" [(ngModel)]="userdetail.mobileNo">
+                                <label class="lbl-common">Email</label>
+
+                            </div>
+                            <div class="text-box-outer">
+                                <input placeholder="Organization" required #organizationNameRef="ngModel" name="organizationName" type="text" [(ngModel)]="userdetail.organization.name">
+                                <label class="lbl-common">Organization</label>
+
+                            </div>
+                            <div class="text-box-outer">
+                                <input placeholder="Password" #passwordRef="ngModel" required type="password" name="password" [(ngModel)]="userdetail.password">
+                                <label class="lbl-common">Password</label>
+
+                            </div>
+                            <div class="text-box-outer">
+                                <input placeholder="Verify Password" required type="text">
+                                <label class="lbl-common">Verify Password</label>
                             </div>
                         </div>
 
                         <div class="text-box-outer">
-                            <input placeholder="Organization" type="text" value="">
-                            <label class="lbl-common">Organization</label>
-
-                        </div>
-
-                        <div class="text-box-outer">
-                            <input placeholder="Password" type="password">
-                            <label class="lbl-common">Password</label>
-
-                        </div>
-                        <div class="text-box-outer">
-                            <input placeholder="Verify Password" type="password">
-                            <label class="lbl-common">Verify Password</label>
-
-                        </div>
-                        <div class="text-box-outer">
-                            <button class="btn btn-primary btn-block">Register
-                <i class="fa fa-sign-in fa-lg"></i></button>
+                            <button class="btn btn-primary btn-block" type="submit" [ngClass]="{'disable': frmsignUp.invalid}" [disabled]="frmsignUp.invalid">Register
+                      <i class="fa fa-sign-in fa-lg"></i></button>
                         </div>
                     </div>
                 </form>

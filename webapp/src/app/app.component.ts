@@ -3,6 +3,7 @@ import { User } from '../app/model/index';
 import { GlobalEventsManager } from "../GlobalEventsManager";
 import { AuthenticationService } from './service/index';
 import { Router, ActivatedRoute } from '@angular/router';
+import { LoaderService } from './service/comman/loader.service';
 
 @Component({
     selector: 'app-root',
@@ -23,9 +24,18 @@ export class AppComponent {
     loginError: string;
     constructor(private globalEventsManager: GlobalEventsManager,
         private route: ActivatedRoute, private router: Router,
-        private authenticationService: AuthenticationService) {
+        private authenticationService: AuthenticationService,
+    private loaderService:LoaderService) {
      
     }
+    showLoader: boolean;
+  ngOnInit(): void {
+      debugger
+    this.showLoader = false;
+    this.loaderService.status.subscribe((val: boolean) => {
+      this.showLoader = val;
+  });
+  }
     register() {
 
         this.closeBtn.nativeElement.click();
