@@ -35,8 +35,14 @@
                     <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>Register</h3>
                     <div class="clearfix">
                         <div class="userImageDiv">
-                            <img src="assets/img/dp.jpg" class="userImage" />
-                            <input type="file" />
+                            <figure class="image uploadBtn uploadBtnRestImage add">
+                                <img [src]="logo" src="" class="imgOfferlogo" alt="">
+                            </figure>
+                            <div class="buttonsub">
+                                <input type="file" name="avatar" (change)="onFileChange($event)" accept="image/*" class="browse-input" id="docfileupload">
+                            </div>
+                            <!-- <img src="assets/img/dp.jpg" class="userImage" />
+                            <input type="file" /> -->
                         </div>
                         <div class="existing-user-outer">
                             <div class="text-box-outer">

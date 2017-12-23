@@ -19,8 +19,43 @@ import { HomeComponent } from './home/home.component';
 import { ProjectComponent } from './project/project.component';
 import { IssueComponent } from './issue/issue.component';
 import { ChartComponent } from './chart/chart.component';
-import { ChartsModule } from 'ng2-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+
 import{LoaderService} from './service/comman/loader.service';
+
+import {
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatExpansionModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule,
+  MatStepperModule,
+} from '@angular/material';
 
 
 
@@ -44,14 +79,49 @@ import{LoaderService} from './service/comman/loader.service';
   imports: [
     BrowserModule,
       FormsModule,
+      BrowserAnimationsModule,
       HttpModule,
       routes,
-      ChartsModule
+      MatAutocompleteModule,
+      MatButtonModule,
+      MatButtonToggleModule,
+      MatCardModule,
+      MatCheckboxModule,
+      MatChipsModule,
+      MatDatepickerModule,
+      MatDialogModule,
+      MatExpansionModule,
+      MatGridListModule,
+      MatIconModule,
+      MatInputModule,
+      MatListModule,
+      MatMenuModule,
+      MatNativeDateModule,
+      MatPaginatorModule,
+      MatProgressBarModule,
+      MatProgressSpinnerModule,
+      MatRadioModule,
+      MatRippleModule,
+      MatSelectModule,
+      MatSidenavModule,
+      MatSliderModule,
+      MatSlideToggleModule,
+      MatSnackBarModule,
+      MatSortModule,
+      MatTableModule,
+      MatTabsModule,
+      MatToolbarModule,
+      MatTooltipModule,
+      MatStepperModule,
+      
       // AgmCoreModule.forRoot({
       //     apiKey: 'AIzaSyBlvmXi0cL76v48MHEAZDAyAPRU94ZCWOE'
       // })
   ],
-  providers: [AuthenticationService,LoaderService, ApplicationHeader,UserService, AlertService, GlobalEventsManager
+  providers: [AuthenticationService,
+    LoaderService, ApplicationHeader,
+    UserService, AlertService,
+     GlobalEventsManager
   ],
    bootstrap: [AppComponent]
 })

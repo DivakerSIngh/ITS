@@ -4,6 +4,7 @@ var express = require("express");
 var app = express();
 var http = require('http');
 var routes = require('./route/route');
+global.domain = require("../webapi/comman/domain");
 var mongoose = require('mongoose');
 
 //Parse incoming request bodies in a middleware before your handlers, available under the req.body property.

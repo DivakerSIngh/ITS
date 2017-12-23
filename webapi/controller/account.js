@@ -9,7 +9,16 @@ var organization = require('../model/organization')
 
 module.exports = {
     login: function(req, res) {
-        res.send('login success')
+        console.log("login request..>>", req.body)
+        var userDetails = req.body;
+        async.waterfall([
+            function(callback) {
+                var response = checkLoginUserExist(userDetails.userName, userDetails.password, res, callback);
+                console.log(response);
+            }
+        ])
+
+        //res.send('login success')
     },
 
 
@@ -69,34 +78,22 @@ module.exports = {
     }
 
 }
-saveOrganization = function(request, res, callback) {
-    console.log('saveOrganization=======>', request);
-    var org = new organization({
-        name: request.organization.name,
-        createdBy: request.userName,
-        createdOn: new Date()
-    });
-    org.save(function(err, data) {
+let checkLoginUserExist = function(userName, password, res, callback) {
+    console.log("email password>>>>", userName, password);
+    domain.User.findOne({
+        userName: userName,
+        password: password,
+    }).lean().exec(function(err, adminObject) {
         if (err) {
-            return (err, data);
-        } else {
-            console.log('organization save response=======>', data);
-            callback(err, data);
+            console.log("erorr>>>>", err);
+            return;
         }
+        if (adminObject) {
+            callback(null, adminObject)
+                //generateAccessToken(adminObject, )
+        } else {
+            console.log("Invalid Username and password", err);
 
+        }
     })
-}
-saveUser = function(request, callback) {
-    console.log("user request>>>>>>>>>>>>>>>>>>>", request);
-    console.log("calback>>>>>>>>>>>>>>>>>", callback);
-    // req.body.organizationId = data._id;
-    // var user = new loginUser(req.body);
-    // user.save(function(err, data) {
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-    //         res.send(data)
-    //     }
-
-    // })
-}
+};
