@@ -12,12 +12,11 @@ module.exports = {
         console.log("login request..>>", req.body)
         var userDetails = req.body;
         async.waterfall([
-                function(callback) {
-                    var response = checkLoginUserExist(userDetails.userName, userDetails.password, res, callback);
-                    console.log(response);
-                }
-            ])
-            //res.send('login success')
+            function(callback) {
+                var response = checkLoginUserExist(userDetails.userName, userDetails.password, res, callback);
+                console.log(response);
+            }
+        ])
     },
 
 
