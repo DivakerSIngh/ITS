@@ -29,16 +29,16 @@ logo:any;
    this.userdetail.organization={}
   }
 login(){
-debugger
+
  this.router.navigate(['/home']);
 
 }
 signUp(userdetail){
-  debugger
+  
   this.loader.display(true);
  
 this.accouuntService.signUp(userdetail).subscribe((data) => {
-   debugger
+   
    this.loader.display(false);
    this.snackBar.openSnackBar("You Have Successfull Registered!","Close");
    

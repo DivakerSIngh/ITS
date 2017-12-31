@@ -30,7 +30,7 @@ export class AppComponent {
     }
     showLoader: boolean;
   ngOnInit(): void {
-      debugger
+      
     this.showLoader = false;
     this.loaderService.status.subscribe((val: boolean) => {
       this.showLoader = val;

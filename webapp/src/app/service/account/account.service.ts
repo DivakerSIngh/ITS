@@ -21,10 +21,10 @@ export class AccountService {
     return 'Hey!';
 }
 signUp(request) {
-  debugger
+  
   return this.http.post(ApiConfig.signUp,request,{headers:this.header.getHeaderOfProfilePic()})
             .map((response: Response) => {
-          debugger
+          
           return response.json();
             })
             .catch((error: any) => Observable.throw(error.json() || 'Server error'));
