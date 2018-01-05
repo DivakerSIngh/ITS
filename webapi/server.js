@@ -6,6 +6,11 @@ var http = require('http');
 var routes = require('./route/route');
 global.domain = require("../webapi/comman/domain");
 var mongoose = require('mongoose');
+global.crypto = require('crypto');
+global.commonModule = require("./comman/common");
+global.responseCode = require("./comman/responseCode");
+global.config = require('./config/config');
+//global.uuid = require('uuid');
 
 //Parse incoming request bodies in a middleware before your handlers, available under the req.body property.
 var bodyParser = require('body-parser');

@@ -6,13 +6,17 @@ declare var $: any;
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+userName:String
+email:String
   constructor() {
 
    
    }
 
   ngOnInit() {
+    debugger
+    this.userName= localStorage.getItem('userName');
+     this.email= localStorage.getItem('email');
   }
 
 }

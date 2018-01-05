@@ -9,18 +9,26 @@ var organization = require('../model/organization')
 
 module.exports = {
     login: function(req, res) {
-        console.log("login request..>>", req.body)
-        var userDetails = req.body;
-        async.waterfall([
-            function(callback) {
-                var response = checkLoginUserExist(userDetails.userName, userDetails.password, res, callback);
-                console.log(response);
-            }
-        ])
+        let status = commonModule.validateRequestBody(req, res, ['email', 'password'])
+        console.log("login status=>", status)
+        if (status) {
+            let encryptedPassword = commonModule.passwordEncryption(req.body.password, config.salt);
+            console.log("encryptedPassword=>", encryptedPassword)
+            async.waterfall([
+                function(callback) {
+                    checkLoginUserExist(req.body.email, encryptedPassword, res, callback)
+                },
+                function(adminObject, callback) {
+                    generateAccessToken(adminObject, res, callback)
+                }
+            ], function(err, result) {
+                // Logger.info("result", result)
+                commonModule.commonResponseHandler(res, result, responseCode.login_success_msg, responseCode.success_code, false)
+            })
+        }
     },
-
-
     signUp: function(req, res) {
+        req.body.password = commonModule.passwordEncryption(req.body.password, config.salt);
         ////////////////////////////start/////////////////
         async.waterfall([
             function(callback) {
@@ -29,6 +37,7 @@ module.exports = {
                     createdBy: req.body.userName,
                     createdOn: new Date()
                 });
+
 
                 var organizations = new organization(org);
                 organizations.save(function(err, data) {
@@ -61,9 +70,56 @@ module.exports = {
             }
         ], function(err, result) {
             console.log("result", result)
-                // commonModule.commonResponseHandler(res, result, adminString.login_success_msg, adminString.success_code, false)
+                // commonModule.commonResponseHandler(res, result, responseCode.login_success_msg, responseCode.success_code, false)
         })
 
     }
 
+}
+
+let checkLoginUserExist = function(email, password, res, callback) {
+    domain.User.findOne({
+        email: email,
+        password: password,
+        status: 2
+    }).lean().exec(function(err, adminObject) {
+        if (err) {
+            commonModule.commonResponseHandler(res, err, responseCode.internal_server_error, responseCode.server_error_code, true)
+            return;
+        }
+        if (adminObject) {
+            callback(null, adminObject)
+                //generateAccessToken(adminObject, )
+        } else {
+            //Invalid Username and password
+            commonModule.commonResponseHandler(res, {}, responseCode.invalid_username_password_msg, responseCode.invalid_username_password_code, true)
+        }
+    })
+};
+
+let generateAccessToken = function(adminObject, res, callback) {
+    console.log('generatetoken me aagaya')
+    let accessToken = "asfahsjfhajsfasfa-asfasfhasf-asfasf12132"; //uuid.v1();
+    console.log("Token", accessToken)
+    domain.User.findOneAndUpdate({
+            _id: adminObject._id
+        }, {
+            $set: {
+                accessToken: accessToken,
+                session_start_time: new Date()
+            }
+        }, {
+            new: true
+        },
+        function(err, dt1) {
+            if (err) {
+                commonModule.commonResponseHandler(res, err, responseCode.internal_server_error, responseCode.server_error_code, true)
+                return
+            }
+            console.log("access token" + accessToken)
+            callback(null, {
+                adminObject: adminObject,
+                accessToken: accessToken
+            })
+        })
 }

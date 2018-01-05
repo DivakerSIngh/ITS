@@ -44,10 +44,11 @@
 module.exports = (function() {
     //console.log("Env: ", process.env.NODE_ENV);
     return {
-        database: "mongodb://localhost:27017/pms",
+        'database': "mongodb://localhost:27017/pms",
+        'salt': "1234567890",
         // dbUser: "abcd",
         // dbPassword: "MNddrwer7Ye5N",
-        port: 3040
+        'port': 3040
     };
 
 })();

@@ -5,7 +5,10 @@ import{User} from '../model/user'
 import{LoaderService} from '../service/comman/loader.service';
 import{SnackBar} from '../service/comman/snackBar'
 // import { MatSnackBar } from '@angular/material'
-
+export class LoginUser{
+    email:string;
+    password:string;
+}
 @Component({
   selector: 'app-root',
   templateUrl: './login.component.html',
@@ -14,6 +17,7 @@ import{SnackBar} from '../service/comman/snackBar'
 })
 export class LoginComponent implements OnInit {
 userdetail:any
+loginUser:LoginUser;
 logo:any;
   constructor(private route: ActivatedRoute, 
     private router: Router,
@@ -26,12 +30,32 @@ logo:any;
 
   ngOnInit() {
    this.userdetail={};
-   this.userdetail.organization={}
+   this.userdetail.organization={};
+    this.loginUser={
+        email:"",
+        password:""
+      }
   }
-login(){
-
- this.router.navigate(['/home']);
-
+login(loginRequest){
+debugger
+this.accouuntService.login(loginRequest).subscribe((data) => {
+    debugger
+    if(data.statusCode==200)
+    {
+        localStorage.setItem('auth-token', data.result.accessToken);
+        localStorage.setItem('userName', data.result.adminObject.userName);
+        localStorage.setItem('email', data.result.adminObject.email);
+        localStorage.setItem('mobileNo', data.result.adminObject.mobileNo);
+    this.router.navigate(['/home']);
+    this.snackBar.openSnackBar("Login Success!","Close");
+    }else{
+       this.snackBar.openSnackBar(data.message,"Close");
+    }
+  
+},error=>{
+   this.snackBar.openSnackBar(error,"Close");
+  console.warn("error", error);
+});
 }
 signUp(userdetail){
   

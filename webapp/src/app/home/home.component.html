@@ -3,7 +3,7 @@
 
         <div class="sidebar-wrapper">
             <div class="logo" style="text-align:center;">
-                <img src="assets/img/org.jpg" class="orgLogo" /><br> 4thMinds Product
+                <img src="assets/img/org.jpg" class="orgLogo" /><br>{{userName}} ({{email}} )
 
             </div>
             <ul class="nav">
@@ -44,17 +44,17 @@
                     </a>
                 </li>
                 <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                        <a routerLink="issue">
-                            <i class="pe-7s-graph3"></i>
-                            <p>Task Status</p>
-                        </a>
-                    </li>
-                    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                            <a routerLink="chart">
-                                <i class="pe-7s-graph3"></i>
-                                <p>Chart</p>
-                            </a>
-                        </li>
+                    <a routerLink="issue">
+                        <i class="pe-7s-graph3"></i>
+                        <p>Task Status</p>
+                    </a>
+                </li>
+                <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                    <a routerLink="chart">
+                        <i class="pe-7s-graph3"></i>
+                        <p>Chart</p>
+                    </a>
+                </li>
 
 
                 <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">

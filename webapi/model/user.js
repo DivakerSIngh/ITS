@@ -9,9 +9,16 @@ var user = new schema({
     organizationId: String,
     password: String,
     mobileNo: String,
-    image: String
+    image: String,
+
+    status: {
+        type: String,
+        default: 2
+    },
 
 });
+
+// 1 for active user   and 2 for inactive user
 
 
 

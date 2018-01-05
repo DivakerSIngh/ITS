@@ -7,17 +7,25 @@
                     <div class="loginmodal-container">
                         <h1>Login to Your Account</h1><br>
                         <span style="color: red;font-family: cursive;">{{loginError}}</span>
-                        <form class="login-form" name="form" novalidate>
+                        <form class="login-form" (ngSubmit)="login(frm.value)" #frm="ngForm" novalidate>
 
                             <label for="username" style="margin-left: 3px;position: absolute;line-height:3;" class="fa fa-user input-icon"></label>
 
 
-                            <input type="text" name="user" placeholder="Username" class="inputClass" />
+                            <input type="text" name="email" #emailRef="ngModel" [(ngModel)]="loginUser.email" placeholder="Username" class="inputClass" />
+                            <div *ngIf="emailRef.invalid&&emailRef.touched">
+                                <span class="" *ngIf="emailRef?.errors.email">Please enter a valid email</span>
+                            </div>
+
                             <label for="password" style="margin-left: 3px;position: absolute;line-height:3;" class="fa fa-lock"></label>
-                            <input type="password" name="pass" class="inputClass" placeholder="Password" />
-                            <button class="btn btn-primary btn-block" (click)="login()">Login
+                            <input type="password" name="pass" class="inputClass" placeholder="Password" name="password" #passwordRef="ngModel" [(ngModel)]="loginUser.password" id="pass" value="" required minlength="3" maxlength="20" />
+                            <div *ngIf="passwordRef.invalid&&passwordRef.touched">
+                                <span class="" *ngIf="passwordRef?.errors.required">password is required.</span>
+                                <span class="" *ngIf="passwordRef?.errors.minlength">password should be greater than 3 characters.</span>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" [disabled]="frm.invalid">Login
                 <i class="fa fa-sign-in fa-lg"></i></button>
-                            <input type="submit " name="login " class="login loginmodal-submit " value=" " data-dismiss="modal " #closeBtn style="display:none; " />
+                            <!--<input type="submit " name="login " class="login loginmodal-submit " value=" " data-dismiss="modal " #closeBtn style="display:none; " />-->
                         </form>
 
                         <div class="login-help ">

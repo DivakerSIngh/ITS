@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
+userName:String
+email:String
   getDynamicClass(classNumber){
 
 var cssClass:string="bg-aqua";
@@ -48,6 +49,8 @@ return cssClass;
    }
   ngOnInit() {
     debugger
+      this.userName= localStorage.getItem('userName');
+     this.email= localStorage.getItem('email');
   }
 
 }
