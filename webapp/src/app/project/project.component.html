@@ -23,7 +23,7 @@
 
     <div class="col-lg-3 col-xs-6">
         <div class="small-box transition" style="background-size: cover;background-image: url(../assets/img/body.jpg);" [ngClass]="getDynamicClass(item.Count)">
-            <div class="inner">
+            <div class="inner" [ngStyle]="{'background': item.color}">
                 <div style="float: right;">
                     <a class="projectAction"><i class="pe-7s-share"></i></a>
                     <a class="projectAction"><i class="pe-7s-note"></i></a>
@@ -63,6 +63,7 @@
                                         <input type="text" data-attributeid="ProjectProjectName" 
                                         [(ngModel)]="saveProjectObject.name"
                                          class="form-control" id="projectname" name="projectName" required placeholder="Name" #nameRef="ngModel">
+                                         
                                          <div *ngIf="nameRef.invalid&&nameRef.touched" class="err-msg">
                                                 <span class="" *ngIf="nameRef?.errors.required">Project Name Required</span>
                                             <span class="" *ngIf="nameRef?.errors.minlength&&!nameRef?.errors.required">
@@ -106,16 +107,20 @@
                                     </div>
                                     <div class="form-group formtxt m-b-l pd">
                                         <label data-attributeid="ProjectCoverColor">Cover Color</label>
-                                        <div class="color-picker">
-                                            <div class="input-group colorpicker-component colorpicker-element">
-                                                <a href="#cover-color" data-toggle="modal" class="form-control cover-color-selector" style="border:0px">
-                                                    <input type="hidden" class="form-control" id="txtcoverColor" name="txtcoverColor" value="#48c9b0">
-                                                    <div style="width:38px;height:30px">
-                                                        <span class="input-group-addon" id="project-cover-color" style="height: 32px; border-radius: 5px; border-right: 1px solid rgb(204, 204, 204); background-color: rgb(72, 201, 176);"></span>
-                                                    </div>
-                                                </a>
-                                            </div>
+                                        <div class="color-picker" class="col-xs-12">
+                                            <button type="button" (click)="setColor('ec5252');" class="col-xs-2 color-picker" style="background:#ec5252"></button>
+                                                <button type="button" (click)="setColor('ecd052');" class="col-xs-2 color-picker" style="background:#ecd052"></button>
+                                                    <button type="button" (click)="setColor('1fdf5f');" class="col-xs-2 color-picker" style="background:#1fdf5f"></button>
+                                                        <button type="button" (click)="setColor('4555e7');" class="col-xs-2 color-picker" style="background:#4555e7"></button>
+                                                            <button type="button" (click)="setColor('e745da');" class="col-xs-2 color-picker" style="background:#e745da"></button>
+                                                                <button type="button" (click)="setColor('45e7c4');" class="col-xs-2 color-picker" style="background:#45e7c4"></button>
+                                                                    <button type="button" (click)="setColor('e67b25');" class="col-xs-2 color-picker" style="background:#e67b25"></button>
+                                                                        <button type="button" (click)="setColor('2715ce');" class="col-xs-2 color-picker" style="background:#2715ce"></button>
+                                             <button type="button" (click)="setColor('ebecd4');" class="col-xs-2 color-picker" style="background:#ebecd4"></button>                                       
+
+                                           
                                         </div>
+                                        <div [ngStyle]="{'background': saveProjectObject.color}">{{saveProjectObject.color}}</div>
                                     </div>
             
                                     <div class="form-group formtxt pd RangeSlider-drive m-b-m m-t-elg">

@@ -19,7 +19,7 @@ import{SnackBar} from '../service/comman/snackBar'
 })
 @Injectable()
 export class ProjectComponent implements OnInit  {
-  
+  saveSuccess:Boolean=true
   progress:any; 
   logo:any; 
   modal:String="";
@@ -54,6 +54,10 @@ this.getAll();
     }
    
 
+   }
+   setColor(color){
+     debugger
+   this.saveProjectObject.color="#"+color;
    }
    ngAfterViewInit() {
     var s = this.document.createElement("script");
@@ -114,6 +118,7 @@ this.getAll();
         this.snackBar.openSnackBar(data.message);
       }
        this.saveProjectObject= new Project();
+       this.saveSuccess=false;
        this.snackBar.openSnackBar("Project Saved Successfull!","Close");
     },error=>{
       console.warn("error", error);

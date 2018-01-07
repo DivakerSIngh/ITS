@@ -6043,3 +6043,10 @@ table.text-center th {
     width: 100%;
     height: 100%;
 }
+.color-picker{
+    height: 20px;
+    width: 26px;
+    margin-top: 5px;
+    cursor: pointer;
+    border: none;
+}
