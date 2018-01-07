@@ -1,4 +1,8 @@
-<script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+
+
+<div class="wow fadeInUp" data-wow-duration="0.4s" data-wow-delay="0.4s">
+
+
 <div class="page-title">
     <div>
         <p>Project</p>
@@ -9,18 +13,13 @@
         <a href="#costumModal3" role="button" class="btn btn-primary icon-btn" data-toggle="modal">
                 <i class="fa fa-fw fa-lg fa-check-circle"></i> Add project
             </a>
-        <!-- <a href="#costumModal3" role="button" class="btn btn-primary icon-btn" data-toggle="modal">
-            <i class="fa fa-fw fa-lg fa-check-circle"></i> Add project
-        </a> -->
-
-        <!--<button class="btn btn-primary icon-btn" type="button">
-  <i class="fa fa-fw fa-lg fa-check-circle"></i>Add Project</button>-->
+       
 
         &nbsp;&nbsp;&nbsp;
         <a class="btn btn-default icon-btn" href="#"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
     </div>
 </div>
-<div *ngFor="let item of customList">
+<div *ngFor="let item of projectList;let i=index">
 
     <div class="col-lg-3 col-xs-6">
         <div class="small-box transition" style="background-size: cover;background-image: url(../assets/img/body.jpg);" [ngClass]="getDynamicClass(item.Count)">
@@ -30,8 +29,8 @@
                     <a class="projectAction"><i class="pe-7s-note"></i></a>
                     <a class="projectAction"><i class="pe-7s-close"></i></a>
                 </div>
-                <h3 class="ng-binding"> {{item.Id}}</h3>
-                <p>{{item.DisplayText}} </p>
+                <h3 class="ng-binding"> {{i+1}}</h3>
+                <p>{{item.name}} </p>
             </div>
             <div class="icon">
                 <i class="pe-7s-hotel"></i>
@@ -43,6 +42,7 @@
 
 
 <div id="costumModal3" class="modal" data-easein="flipYIn" tabindex="-1" role="dialog" aria-labelledby="costumModalLabel" aria-hidden="true">
+<form  (ngSubmit)="saveProject(saveProjectObject)" #frmAddProject="ngForm" novalidate>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -55,33 +55,54 @@
             </div>
             <div class="modal-body-s">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-xxxs">
-                    <form id="saveProjectForm" novalidate="novalidate">
                         <div class="in row">
                             <div class="col-xs-12 col-sm-7 col-md-12 col-lg-7 p-xxxs">
                                 <div class="column">
                                     <div class="form-group formtxt pd">
                                         <label for="projectname" data-attributeid="ProjectProjectName">Name</label>
-                                        <input type="text" data-attributeid="ProjectProjectName" class="form-control" id="projectname" name="projectname" placeholder="Name">
-                                        <span class="errorValidation"></span>
+                                        <input type="text" data-attributeid="ProjectProjectName" 
+                                        [(ngModel)]="saveProjectObject.name"
+                                         class="form-control" id="projectname" name="projectName" required placeholder="Name" #nameRef="ngModel">
+                                         <div *ngIf="nameRef.invalid&&nameRef.touched" class="err-msg">
+                                                <span class="" *ngIf="nameRef?.errors.required">Project Name Required</span>
+                                            <span class="" *ngIf="nameRef?.errors.minlength&&!nameRef?.errors.required">
+                                                Project must between 6 to 20 char Max</span>
             
                                     </div>
+                                </div>
                                     <div class="form-group formtxt pd project-details-select">
                                         <label data-attributeid="ProjectGroupName">Group Name</label>
-                                            <select class="select2me form-control select2-hidden-accessible" style="width:100% !important" id="projectGroup" name="projectGroup" tabindex="-1" aria-hidden="true">
-                                                <option value="4061">Mobile App</option><option value="4075">Group a</option><option value="4076">Group b</option>
-                                                <option value="4084">appInventiv</option></select>
-                                                
-                                            <!-- <a href="#add-group" data-toggle="modal" class="input-group-addon btn btn-info btn-sm"><i class="fa fa-plus"></i></a> -->
-                                        <span class="errorValidation"></span>
+                                            <select class="select2me form-control select2-hidden-accessible" required #groupRef="ngModel"
+                                            style="width:100% !important" id="projectGroup" [(ngModel)]="saveProjectObject.groupId" name="projectGroup" 
+                                            tabindex="-1" aria-hidden="true">
+                                                <option value="1+Mobile App">Mobile App</option>
+                                                <option value="2+Node Backend">Node Backend</option>
+                                                <option value="3+Dot Net Backend">Dot Net Backend</option>
+                                                <option value="4+Sql Server">Sql Server</option>
+                                                <option value="5+Angular">Angular</option>
+                                                <option value="6+Angular 2">Angular 2</option>
+                                            </select>
+                                            <div *ngIf="groupRef.invalid&&groupRef.touched" class="err-msg">
+                                                    <span class="" *ngIf="groupRef?.errors.required">Please Select Project Group</span>
+                                               
+                
+                                        </div>
+                                           
                                       
                                     </div>
                                     <div class="form-group formtxt m-b-l pd">
                                         <label for="status" data-attributeid="ProjectLifeCycleStateName">Status</label>
                                       
-                                        <select class="select2me form-control select2-hidden-accessible" id="status" name="status" tabindex="-1" aria-hidden="true">
-                                            <option value="25388">Not Started</option><option value="25389">In Progress</option><option value="25390">Closed</option></select>
+                                        <select [(ngModel)]="saveProjectObject.statusId" required #statusRef="ngModel" class="select2me form-control select2-hidden-accessible" id="status" name="status" tabindex="-1" aria-hidden="true">
+                                            <option value="1+Not Started">Not Started</option>
+                                            <option value="2+In Progress">In Progress</option>
+                                            <option value="3+Closed">Closed</option>
+                                        </select>
+                                        <div *ngIf="statusRef.invalid&&statusRef.touched" class="err-msg">
+                                                <span class="" *ngIf="statusRef?.errors.required">Please Select Status</span>
+                                            </div>
                                             
-                                        <span class="errorValidation"></span>
+                                       
                                     </div>
                                     <div class="form-group formtxt m-b-l pd">
                                         <label data-attributeid="ProjectCoverColor">Cover Color</label>
@@ -98,7 +119,12 @@
                                     </div>
             
                                     <div class="form-group formtxt pd RangeSlider-drive m-b-m m-t-elg">
-                                        <label class="range">Percentage Complete:  60%</label>
+                                            
+                                        <label class="range">Percentage Complete:  
+                                                <mat-slider thumbLabel  min="1"  value="0"
+                                                 [(ngModel)]="saveProjectObject.percentComplete" name="percentComplete" max="100" step="1" value="2"></mat-slider>
+                                                {{saveProjectObject.percentComplete}}%
+                                            </label>
                                     </div>
             
                                 
@@ -106,8 +132,19 @@
                                     <div class="form-group formtxt pd">
                                             <label>Report Manager</label>
                                             <div>
-                                                    <select class="select2me form-control select2-hidden-accessible" id="status" name="status" tabindex="-1" aria-hidden="true">
-                                                            <option value="25388">Not Started</option><option value="25389">In Progress</option><option value="25390">Closed</option></select>
+                                                    <select class="select2me form-control select2-hidden-accessible" required #managerRef="ngModel"
+                                                    id="status" name="reportingManagerId" tabindex="-1" aria-hidden="true" [(ngModel)]="saveProjectObject.reportingManagerId">
+                                                            <option value="1+Divaker">Divaker</option>
+                                                            <option value="2+Shailesh">Shailesh</option>
+                                                            <option value="3+Damroo">Damroo</option></select>
+
+                                                            <div *ngIf="managerRef.invalid&&managerRef.touched" class="err-msg">
+                                                         <span class="" *ngIf="managerRef?.errors.required">Please Select Reporting Manager
+
+                                                         </span>
+                                                            </div>
+                                                               
+                                                                
                                             </div>
                                         </div>
                                    
@@ -117,28 +154,33 @@
                                 <div class="column border-rn upload-imagesec">
                                      <label>Upload Cover Image: </label>
                                      <span class="input-label m-b-xs">( image not more than 2MB. in (.png and .jpeg))</span>
-                                    <figure class="image">
-                                            <img [src]="logo" style="width: 173px;height: 91px;margin: 5px;" alt="Preivew"> 
-                                    </figure>                                             
-                                    <div class="buttonsub">
-                                        <input type="file" (change)="onFileChange($event)" multiple="" accept="image/*" class="browse-input" name="files[]" id="docfileupload">   
-                                    </div>
+                                     <div class="userImageDiv">
+                                            <figure class="image uploadBtn uploadBtnRestImage add">
+                                                <img [src]="logo" src="" class="imgOfferlogo" alt="">
+                                            </figure>
+                                            <div class="buttonsub">
+                                                <input type="file" name="avatar" (change)="onFileChange($event)" accept="image/*" class="browse-input" id="docfileupload">
+                                            </div>
+                                        </div>                                            
                                    
                                 </div>
                             </div>
                            
                         </div>
-                    </form>
+                    
                 </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">
                             Close
                         </button>
-                <button class="btn btn-primary">
-                            Save changes
+                <button type="submit"   [ngClass]="{'disable': frmAddProject.invalid}" [disabled]="frmAddProject.invalid" class="btn btn-primary">
+                            Save And Add More
                         </button>
             </div>
         </div>
     </div>
+</form>
+</div>
+
 </div>

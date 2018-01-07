@@ -10,7 +10,7 @@ global.crypto = require('crypto');
 global.commonModule = require("./comman/common");
 global.responseCode = require("./comman/responseCode");
 global.config = require('./config/config');
-//global.uuid = require('uuid');
+global.uuid = require('uuid');
 
 //Parse incoming request bodies in a middleware before your handlers, available under the req.body property.
 var bodyParser = require('body-parser');
@@ -22,7 +22,12 @@ app.use(bodyParser.json());
 //to all cors request
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+     res.header("Access-Control-Allow-Headers", "Origin,auth-token,  X-Requested-With, Content-Type, Accept");
+     console.log('--------------------------------request Details----------------------------------------', req.originalUrl);
+     console.log('auth-token', req.headers['auth-token']);
+     console.log('user-agent', req.headers['user-agent']);
+     console.log('-----------------------------------------ENDS------------------------------------------');
+    // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 

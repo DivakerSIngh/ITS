@@ -73,6 +73,31 @@ module.exports = {
                 // commonModule.commonResponseHandler(res, result, responseCode.login_success_msg, responseCode.success_code, false)
         })
 
+    },
+     logout : function (req, res) {
+        
+        let bearerHeader = req.headers["auth-token"];
+        console.log('token for logout',bearerHeader)
+        if (bearerHeader) {
+            domain.User.findOneAndUpdate({
+                accessToken: bearerHeader,
+                status: 2
+            }, {
+                $set: {
+                    accessToken: uuid.v1()
+                }
+            }, function (err, adminObject) {
+                if (err) {
+                    commonModule.commonResponseHandler(res, err, responseCode.internal_server_error, responseCode.server_error_code, true)
+                    return;
+                }
+                if (adminObject) {
+                    commonModule.commonResponseHandler(res, {}, responseCode.logout_success_msg, responseCode.logout_success_code, false)
+                } else {
+                    commonModule.commonResponseHandler(res, {}, responseCode.unauthorized_msg, responseCode.unauthorized_code, true)
+                }
+            })
+        }
     }
 
 }
@@ -99,7 +124,7 @@ let checkLoginUserExist = function(email, password, res, callback) {
 
 let generateAccessToken = function(adminObject, res, callback) {
     console.log('generatetoken me aagaya')
-    let accessToken = "asfahsjfhajsfasfa-asfasfhasf-asfasf12132"; //uuid.v1();
+    let accessToken = uuid.v1();
     console.log("Token", accessToken)
     domain.User.findOneAndUpdate({
             _id: adminObject._id

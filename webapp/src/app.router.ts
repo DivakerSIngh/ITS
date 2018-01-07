@@ -10,6 +10,7 @@ import{ProjectComponent} from '../src/app/project/project.component';
 import { HomeComponent } from '../src/app/home/home.component';
 import { IssueComponent } from '../src/app/issue/issue.component';
 import { ChartComponent } from '../src/app/chart/chart.component';
+import {AuthGuardService} from '../src/app/service/comman/auth-guard.service'
 
 export const router: Routes = [
 
@@ -17,7 +18,7 @@ export const router: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
-    path: 'home', component: HomeComponent, //canActivate: [AuthGuard],
+    path: 'home', component: HomeComponent, canActivate: [AuthGuardService],
     children: [
       {path: '',component: DashboardComponent},
       {path: 'index',component: DashboardComponent},

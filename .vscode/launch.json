@@ -1,27 +1,13 @@
 {
     "version": "0.2.0",
     "configurations": [
-{
-    "type": "lldb",
-    "request": "launch",
-    "name": "Launch",
-    "program": "${workspaceRoot}/webapi/controller/account.js",
-    "args": [],
-    "cwd": "${workspaceRoot}"
-},
-{
-    "type": "node",
-    "request": "launch",
-    "name": "Launch Program",
-    "program": "${workspaceFolder}/webapi/controller/account.js"
-},
-        // {
-        //     "type": "chrome",
-        //     "request": "launch",
-        //     "name": "Launch Chrome",
-        //     "url": "http://localhost:4200",
-        //     "webRoot": "${workspaceFolder}/webapi/app.js"
-        // }
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceFolder}"
+        }
     ],
     "compounds": []
 }

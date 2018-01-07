@@ -45,6 +45,8 @@ module.exports = {
     'user_decline_msg': "User UnApproved successfully",
     'user_approve_msg': "User Approved successfully",
 
+    'data_fetch_msg': "Data Fetch Successfully",
+
     'notify_sent_msg': "Notification Sent  successfully",
     'notify_draft_msg': "Notification Saved successfully",
 

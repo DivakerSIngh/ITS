@@ -18,16 +18,25 @@ export class AccountService {
   }
 
   login(request) {
-     return this.http.post(ApiConfig.login,request,{headers:this.header.getHeaderOfProfilePic()})
+     return this.http.post(ApiConfig.login,request)
             .map((response: Response) => {
           debugger
           return response.json();
             })
             .catch((error: any) => Observable.throw(error.json() || 'Server error'));
 }
+logout() {
+return this.http.post(ApiConfig.logout, {}, {headers:this.header.getHeader()})
+      .map((res: Response) => res.json())
+      .catch((error: any) => Observable.throw(error.json() || 'Server error'));
+}
+clearLocalStorage(){
+  localStorage.clear();
+}
+
 signUp(request) {
   
-  return this.http.post(ApiConfig.signUp,request,{headers:this.header.getHeaderOfProfilePic()})
+  return this.http.post(ApiConfig.signUp,request,{headers:this.header.getHeader()})
             .map((response: Response) => {
           
           return response.json();

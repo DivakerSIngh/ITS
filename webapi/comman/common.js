@@ -4,31 +4,10 @@
 
 ////this function is used password Encryption
 exports.passwordEncryption = function(password, salt) {
-    //Logger.info("passwordEncryption == " + password + salt)
     encryptedPassword = crypto.createHmac('sha1', salt).update(password.toString()).digest('hex')
     return encryptedPassword
 };
 
-////this is used generate all log activity done my admin
-
-// let logger = new(winston.Logger)({
-//     transports: [
-//       new(winston.transports.Console)({
-//             handleExceptions: true,
-//             json: true
-//         }),
-//       new(winston.transports.File)({
-//             filename: 'log_Info.log',
-//             json: true
-//         })
-//     ],
-//     exitOnError: false
-// });
-
-// exports.logger = logger;
-
-
-////this function is used to send Common response handler in application
 
 let commonResponseHandler = function(res, result, message, statusCode, isError) {
     let date = new Date();
@@ -65,22 +44,22 @@ exports.validateRequestBody = validateRequestBody;
 
 ////this function is used to  check Admin authentication middleware
 
-exports.adminAuthenticationMiddleware = function(req, res, next) {
-    //  Logger.info("Control in authentication" + req.headers["auth-token"]);
+exports.authenticationMiddleware = function(req, res, next) {
     let bearerHeader = req.headers["auth-token"];
+    console.log("authenticated token",bearerHeader);
     if (!bearerHeader) {
         commonResponseHandler(res, {}, responseCode.unauthorized_msg, responseCode.unauthorized_code, true)
     } else {
-        domain.Admin.findOne({
+        domain.User.findOne({
             accessToken: bearerHeader,
-            status: 1
+            status: 2
         }).lean().exec(function(err, adminObject) {
             if (err) {
                 res.send(err)
             } else if (adminObject === null) {
                 commonResponseHandler(res, {}, responseCode.unauthorized_msg, responseCode.unauthorized_code, true)
             } else {
-                // Logger.info("Sucessfully authenticated");
+                console.log("Sucessfully authenticated");
                 req.loginUser = adminObject;
                 next();
             }

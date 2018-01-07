@@ -23,6 +23,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import{LoaderService} from './service/comman/loader.service';
 
+import{AppService} from './service/app/app.service';
+import{AuthGuardService} from './service/comman/auth-guard.service';
+import{AccountService} from './service/account/account.service';
+
+
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -119,7 +124,7 @@ import {
       // })
   ],
   providers: [AuthenticationService,
-    LoaderService, ApplicationHeader,
+    LoaderService, ApplicationHeader,AppService,AuthGuardService,AccountService,
     UserService, AlertService,
      GlobalEventsManager
   ],

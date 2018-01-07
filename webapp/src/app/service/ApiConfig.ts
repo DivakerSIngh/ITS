@@ -3,12 +3,13 @@ import{BaseService} from './Base.Service'
 export const ApiConfig= {
     signUp: BaseService._baseServiceUrl+ "signup",
     login: BaseService._baseServiceUrl+ "login",
+    logout: BaseService._baseServiceUrl+ "logout",
     forgotPassword: BaseService._baseServiceUrl+ "forgotPassword",
     restPassword: BaseService._baseServiceUrl+ "restPassword",
    
 
     projectList: BaseService._baseServiceUrl+ "project/getAll",
-    saveProject: BaseService._baseServiceUrl+ "project/save",
+    saveProject: BaseService._baseServiceUrl+ "project/add",
     updateProject: BaseService._baseServiceUrl+ "project/update",
     getProjectById: BaseService._baseServiceUrl+ "project/get",
     deleteProject:BaseService._baseServiceUrl+ "project/delete",

@@ -15,6 +15,14 @@ var user = new schema({
         type: String,
         default: 2
     },
+    accessToken: {
+        type: String,
+        default: ""
+    },
+    session_start_time: {
+        type: Date,
+        default: Date.now
+    },
 
 });
 

@@ -4,6 +4,7 @@ import {AccountService} from '../service/account/account.service'
 import{User} from '../model/user'
 import{LoaderService} from '../service/comman/loader.service';
 import{SnackBar} from '../service/comman/snackBar'
+import{AppService} from '../service/app/app.service'
 // import { MatSnackBar } from '@angular/material'
 export class LoginUser{
     email:string;
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
 userdetail:any
 loginUser:LoginUser;
 logo:any;
-  constructor(private route: ActivatedRoute, 
+  constructor(private appservice:AppService,private route: ActivatedRoute, 
     private router: Router,
     private loader:LoaderService,
    public snackBar: SnackBar,
@@ -38,12 +39,15 @@ logo:any;
   }
 login(loginRequest){
 debugger
+
 this.accouuntService.login(loginRequest).subscribe((data) => {
-    debugger
+    
     if(data.statusCode==200)
-    {
+    {      
+        this.appservice.set(data.result.accessToken);
         localStorage.setItem('auth-token', data.result.accessToken);
         localStorage.setItem('userName', data.result.adminObject.userName);
+        localStorage.setItem('organizationId',data.result.adminObject.organizationId);
         localStorage.setItem('email', data.result.adminObject.email);
         localStorage.setItem('mobileNo', data.result.adminObject.mobileNo);
     this.router.navigate(['/home']);
@@ -57,6 +61,7 @@ this.accouuntService.login(loginRequest).subscribe((data) => {
   console.warn("error", error);
 });
 }
+
 signUp(userdetail){
   
   this.loader.display(true);
