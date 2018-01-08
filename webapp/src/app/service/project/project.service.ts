@@ -29,5 +29,14 @@ getAll(request) {
            })
            .catch((error: any) => Observable.throw(error.json() || 'Server error'));
 }
+delete(request) {
+ 
+  return this.http.post(ApiConfig.deleteProject,request,{headers:this.header.getHeader()})
+            .map((response: Response) => {
+          
+          return response.json();
+            })
+            .catch((error: any) => Observable.throw(error.json() || 'Server error'));
+ }
 
 }

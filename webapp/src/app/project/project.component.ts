@@ -9,7 +9,7 @@ import{Project} from '../model/project'
 import{SnackBar} from '../service/comman/snackBar'
 
 
-
+declare var $: any;
 
 @Component({
   selector: 'app-project',
@@ -18,12 +18,15 @@ import{SnackBar} from '../service/comman/snackBar'
   providers:[ProjectService,Project,SnackBar]
 })
 @Injectable()
+
 export class ProjectComponent implements OnInit  {
   saveSuccess:Boolean=true
+
   progress:any; 
   logo:any; 
   modal:String="";
   saveProjectObject:Project;
+  buttonText:String="Save And Add";
   projectList:Project[];
   filesToUpload: Array<File>;
 
@@ -56,7 +59,8 @@ this.getAll();
 
    }
    setColor(color){
-     debugger
+     
+   
    this.saveProjectObject.color="#"+color;
    }
    ngAfterViewInit() {
@@ -114,6 +118,7 @@ this.getAll();
         this.modal="modal";
         this.snackBar.openSnackBar(data.message);
        this.projectList= data.result;
+       $('#costumModal3').modal('hide');
       }else{
         this.snackBar.openSnackBar(data.message);
       }
@@ -124,15 +129,48 @@ this.getAll();
       console.warn("error", error);
     });
   }
+  clear(){
+    this.saveProjectObject=new Project;
+  }
+  edit(project){
+debugger
+this.saveProjectObject._id=project._id;
+this.saveProjectObject.name=project.name;
+this.saveProjectObject.groupId=project.groupId+'+'+project.groupName;
+this.saveProjectObject.statusId=project.statusId+'+'+project.status;
+this.saveProjectObject.color=project.color;
+this.saveProjectObject.percentComplete=project.percentComplete;
+this.saveProjectObject.reportingManagerId=project.reportingManagerId+'+'+project.reportingManagerName;
+
+  }
 getAll(){
-  debugger
+  
   this.loader.display(false);
   this.projectService.getAll({}).subscribe((data) => {
-    debugger
-   
     if(data.statusCode==200)
     {
+      if(data.result.length>0) 
       this.snackBar.openSnackBar(data.message);
+      else
+      this.snackBar.openSnackBar('No data found');
+     this.projectList= data.result;
+    }else{
+      this.snackBar.openSnackBar(data.message);
+    }
+    this.loader.display(false);
+    this.saveProjectObject= new Project();
+ },error=>{
+   console.warn("error", error);
+ });
+}
+delete(project){
+  
+  this.loader.display(false);
+  this.projectService.delete({isDeleted: 1, _id: project._id}).subscribe((data) => {
+    
+    if(data.statusCode==200)
+    {
+      this.snackBar.openSnackBar("Project Delete Successfull!");
      this.projectList= data.result;
     }else{
       this.snackBar.openSnackBar(data.message);

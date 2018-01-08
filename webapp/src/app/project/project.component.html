@@ -10,7 +10,7 @@
     <div>
         <input type="text" class="button-search" /><a class="search-bar"><i class="pe-7s-search"></i></a>
        
-        <a href="#costumModal3" role="button" class="btn btn-primary icon-btn" data-toggle="modal">
+        <a href="#costumModal3" (click)="clear()" role="button" class="btn btn-primary icon-btn" data-toggle="modal">
                 <i class="fa fa-fw fa-lg fa-check-circle"></i> Add project
             </a>
        
@@ -26,8 +26,11 @@
             <div class="inner" [ngStyle]="{'background': item.color}">
                 <div style="float: right;">
                     <a class="projectAction"><i class="pe-7s-share"></i></a>
-                    <a class="projectAction"><i class="pe-7s-note"></i></a>
-                    <a class="projectAction"><i class="pe-7s-close"></i></a>
+                    <a href="#costumModal3" (click)="edit(item)" role="button" class="projectAction" data-toggle="modal">
+                            <i class="pe-7s-note"></i>
+                    </a>
+                    <!-- <a class="projectAction"><i class="pe-7s-note"></i></a> -->
+                    <a (click)="delete(item)" class="projectAction"><i class="pe-7s-close" ></i></a>
                 </div>
                 <h3 class="ng-binding"> {{i+1}}</h3>
                 <p>{{item.name}} </p>

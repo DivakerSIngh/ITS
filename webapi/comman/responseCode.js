@@ -139,6 +139,8 @@ module.exports = {
     'survey_edited_msg': " Edited successfully",
 
     "survey_not_found": " Data not found !",
+    "no_data_found": "Data not found !",
+    "delete_success": "Deleted successfully",
 
 
     'activate_msg': "Activated successfully",
@@ -155,5 +157,6 @@ module.exports = {
 
 
     // "user_not_found": "User not found !",
+
 
 };

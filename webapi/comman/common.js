@@ -2,6 +2,7 @@
 // let winston = require('winston');
 // const nodemailer = require("nodemailer");
 
+
 ////this function is used password Encryption
 exports.passwordEncryption = function(password, salt) {
     encryptedPassword = crypto.createHmac('sha1', salt).update(password.toString()).digest('hex')
@@ -97,3 +98,9 @@ exports.authenticationMiddleware = function(req, res, next) {
 //         html: emailBody
 //     })
 // };
+
+// module.exports = {
+//     'isDelete': 1,
+//     'isActive': 2,
+//     'isInactive': 3,
+// }

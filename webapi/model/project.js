@@ -25,6 +25,10 @@ var project = new schema({
     color:{
         type:String,
         default:'#24ab10'
+    },
+   isDeleted:{
+        type:Number,
+        default:0
     }
 });
 
