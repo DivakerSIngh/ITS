@@ -16,7 +16,7 @@
        
 
         &nbsp;&nbsp;&nbsp;
-        <a class="btn btn-default icon-btn" href="#"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+        <a class="btn btn-default icon-btn"  (click)="showloader();"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
     </div>
 </div>
 <div *ngFor="let item of projectList;let i=index">
@@ -32,8 +32,14 @@
                     <!-- <a class="projectAction"><i class="pe-7s-note"></i></a> -->
                     <a (click)="delete(item)" class="projectAction"><i class="pe-7s-close" ></i></a>
                 </div>
-                <h3 class="ng-binding"> {{i+1}}</h3>
-                <p>{{item.name}} </p>
+                <span class="ng-binding"> {{i+1}}</span><br>
+                <span style="font-size: 13px;">Name : {{item.name}} </span><br>
+                <span style="font-size: 12px;">Status : {{item.status}}</span><br>
+                <span style="font-size: 12px;" class="range">Complete:  <br>
+                        <mat-slider thumbLabel  min="1"  value="0"
+                         [(ngModel)]="item.percentComplete" disa name="percentComplete" max="100" step="1" value="2"></mat-slider>
+                        {{item.percentComplete}}%
+                    </span>
             </div>
             <div class="icon">
                 <i class="pe-7s-hotel"></i>
@@ -191,4 +197,43 @@
 </form>
 </div>
 
+
+
+</div>
+
+
+<!-- pager -->
+<div class="pagingFooter">
+<div *ngIf="pager.pages && pager.pages.length">
+        <span *ngIf="(pager?.currentPage === 1) && (pager.endPage != pager.totalPages)" class="pagingText">
+                Showing {{pager.currentPage}} to {{pager.pageSize}} of {{pager.totalItems}}
+            </span>
+                <span *ngIf="(pager?.currentPage != 1) && (pager.endPage != pager.totalPages)" class="pagingText">
+                        Showing {{(pager.currentPage-1)*pager.pageSize+1}} to
+                       {{(pager.currentPage - 1) * (pager.pageSize + pager.pageSize)}}
+                       of {{pager.totalItems}}
+                </span>
+                <span *ngIf="(pager?.endPage == pager.totalPages)" class="pagingText">
+                        Showing {{(pager.currentPage-1)*pager.pageSize+1}} to
+                        {{pager.totalItems}}
+                       of {{pager.totalItems}}
+                </span>
+</div>
+  <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+      <li [ngClass]="{disabled:pager.currentPage === 1}">
+          <a (click)="setPage(1)">First</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === 1}">
+          <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+      </li>
+      <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+          <a (click)="setPage(page)">{{page}}</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a (click)="setPage(pager.currentPage + 1)">Next</a>
+      </li>
+      <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <a (click)="setPage(pager.totalPages)">Last</a>
+      </li>
+  </ul>
 </div>

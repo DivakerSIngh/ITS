@@ -22,7 +22,7 @@ export class ProjectService {
 }
 getAll(request) {
  
- return this.http.get(ApiConfig.projectList,{headers:this.header.getHeader()})
+ return this.http.post(ApiConfig.projectList,request,{headers:this.header.getHeader()})
            .map((response: Response) => {
          
          return response.json();

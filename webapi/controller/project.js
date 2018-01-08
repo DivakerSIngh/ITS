@@ -27,11 +27,11 @@ module.exports = {
                     domain.Project.update(condition, {$set: req.body}).exec(function (err, updateObj) {
                         console.log("updateObj", updateObj);
                         if (err) {
-                            commonModule.commonResponseHandler(res, err, adminString.internal_server_error, adminString.server_error_code, true)
+                            commonModule.commonResponseHandler(res, err, responseCode.internal_server_error, responseCode.server_error_code, true)
                         }
                         else {
-                            getAllProject(req,res);
-                            // commonModule.commonResponseHandler(res, updateObj, adminString.page_update_msg, adminString.success_code, false)
+                           // getAllProject(req,res);
+                             commonModule.commonResponseHandler(res, updateObj, responseCode.page_update_msg, responseCode.success_code, false)
                         }
                     });
                 }
@@ -69,25 +69,63 @@ module.exports = {
            
     },
     getAll: function(req, res) {
+        let searchObject = createSearchingObject(req, res);
+        let totalCount = 0;
+        if (searchObject) {
+        console.log('search object',req.body);
+   
+        
         async.waterfall([
-            function(callback) {
-                domain.Project.find({isDeleted:0}).lean().exec(function(err, adminObject) {
-                    if (err) {
-                        commonModule.commonResponseHandler(res, err, responseCode.internal_server_error, responseCode.server_error_code, true)
-                        return;
-                    }
-                    if (adminObject) {
-                        callback(null,adminObject)
-                    } else {
-                        commonModule.commonResponseHandler(res, {}, responseCode.invalid_username_password_msg, responseCode.invalid_username_password_code, true)
-                    }
-                })
-            }
+            function (callback) {
+                getProjectCount(searchObject, callback)
+            },
+            function (count, callback) {
+                let object = [];
+                totalCount = count;
+                object.push({
+                    $match: searchObject
+                });
+                // if (req.body.filter) {
+                //     object.push(createTheFilteredObject(req))
+                // }
+                object.push({
+                    "$skip": parseInt(req.body.skip) || 0
+                });
+                if (req.body.limit) {
+                    object.push({
+                        "$limit": parseInt(req.body.limit) || 10
+                    });
+                }
+                console.log('above in getallProject',object)
+                getAllProjects(object, callback)
+            },
+
+            // function(callback) {
+            //     domain.Project.find({isDeleted:0}).lean().exec(function(err, adminObject) {
+            //         if (err) {
+            //             commonModule.commonResponseHandler(res, err, responseCode.internal_server_error, responseCode.server_error_code, true)
+            //             return;
+            //         }
+            //         if (adminObject) {
+            //             callback(null,adminObject)
+            //         } else {
+            //             commonModule.commonResponseHandler(res, {}, responseCode.invalid_username_password_msg, responseCode.invalid_username_password_code, true)
+            //         }
+            //     })
+            // }
         ], function(err, result) {
-            commonModule.commonResponseHandler(res, result, responseCode.data_fetch_msg, responseCode.success_code, false)
+            if (err) {
+                commonModule.commonResponseHandler(res, err, responseCode.internal_server_error, responseCode.server_error_code, true)
+                return;
+            }
+            commonModule.commonResponseHandler(res, {
+                totalRecord: totalCount,
+                record: result
+            }, responseCode.data_fetch_msg, responseCode.success_code, false)
+          
         })
 
-        
+    }
         
        
     },
@@ -101,18 +139,55 @@ module.exports = {
                 updateProject(req.body._id, updateObject, callback)
             }
         ], function (err, result) {
+            console.log("update delete Object==========>", err);
             if (err) {
+                console.log("err me==========>", err);
                 commonModule.commonResponseHandler(res, err, responseCode.internal_server_error, responseCode.server_error_code, true)
             } else if (!result) {
+                console.log("result me==========>", result);
                 commonModule.commonResponseHandler(res, {}, responseCode.no_data_found, responseCode.success_code, true)
             } else {
-                getAllProject(req,res)
+                console.log("Succces delete Object==========>", updateObject);
+                commonModule.commonResponseHandler(res, {}, responseCode.data_fetch_msg, responseCode.success_code, true)
+               // getAllProject(req,res)
             }
         });
     }
 
 }
 
+let createSearchingObject = function (req, res) {
+    let searchObject = {};
+    searchObject.isDeleted =0;
+    // if (req.body.status) {
+    //     searchObject.status = req.body.status;
+    // } else {
+    //     searchObject.isDeleted =0;
+    // }
+   
+    // if (req.body.search) {
+    //     searchObject.$or = []
+    //     searchObject.$or.push({
+    //         "name": new RegExp(req.body.search, "i")
+    //     });
+    // }
+
+    console.log("conditionSearch", JSON.stringify(searchObject));
+    return searchObject;
+};
+function getProjectCount(searchObject, callback){
+    console.log('count api',searchObject)
+    domain.Project.count(searchObject, function (err, totalCount) {
+        console.log('total count api',totalCount)
+        callback(err, totalCount);
+    });
+}
+function getAllProjects(searchObject,callback){
+    domain.Project.aggregate(searchObject, function (err, res) {
+        console.log("project data ===========>.", searchObject);
+        callback(err, res);
+    });
+}
 function getAllProject(req, res){
     async.waterfall([
         function(callback) {
@@ -131,6 +206,7 @@ function getAllProject(req, res){
     ], function(err, result) {
         commonModule.commonResponseHandler(res, result, responseCode.data_fetch_msg, responseCode.success_code, false)
     })
+   
 }
 function updateProjectOperation(req, res, updateObject, message) {
     async.waterfall([
@@ -138,12 +214,13 @@ function updateProjectOperation(req, res, updateObject, message) {
             updateProject(req.body._id, updateObject, callback)
         }
     ], function (err, result) {
+        console('delete status',err)
         if (err) {
             commonModule.commonResponseHandler(res, err, responseCode.internal_server_error, responseCode.server_error_code, true)
         } else if (!result) {
             commonModule.commonResponseHandler(res, {}, responseCode.no_data_found, responseCode.success_code, true)
         } else {
-            commonModule.commonResponseHandler(res, {}, responseCode[message], responseCode.success_code, false)
+            commonModule.commonResponseHandler(res, {}, responseCode.delete_success, responseCode.success_code, false)
         }
     });
 }
@@ -163,9 +240,9 @@ let updateProject = function (_id, updateObject, callback) {
         console.log('error',err+'+++++++++++++',projectObject)
         if(err)
         {
-
+            console.log('error',err)
         }else{
-            
+            console.log('delete Success',projectObject)
             callback(err, projectObject)
         }
        

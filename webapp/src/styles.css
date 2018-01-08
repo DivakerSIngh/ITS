@@ -94,3 +94,8 @@ body {
     select.ng-invalid {
         border-left: 4px solid red !important;
     }
+
+    .pagingFooter{
+        margin-top: 38%;
+    position: absolute;
+    }

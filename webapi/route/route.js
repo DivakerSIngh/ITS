@@ -10,7 +10,7 @@ router.route('/signUp').post(account.signUp);
 router.route('/logout').post(account.logout);
 
 router.route('/project/add').post(project.add, auth.authenticationMiddleware,function(){});
-router.route('/project/getAll').get(project.getAll,auth.authenticationMiddleware,function(){});
+router.route('/project/getAll').post(project.getAll,auth.authenticationMiddleware,function(){});
 router.route('/project/delete').post(project.delete,auth.authenticationMiddleware,function(err,data){});
 
 

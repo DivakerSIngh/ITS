@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+//import { Chart } from 'angular-highcharts';
 
 @Component({
   selector: 'app-root',
@@ -6,58 +7,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-userName:String
-email:String
-  getDynamicClass(classNumber){
+  // chart: any = new Chart({
+  //   chart: {
+  //     type: 'line'
+  //   },
+  //   title: {
+  //     text: 'Dashboard Chart'
+  //   },
+  //   credits: {
+  //     enabled: true
+  //   },
+  //   xAxis: {
+  //     categories: [1,2,3,4,5,6,7,8,9]
+  //   },
 
-var cssClass:string="bg-aqua";
-switch  (classNumber){
-case 1:
-cssClass= "bg-aqua aqua-shadow";
-break;
-case 2:
-cssClass= "bg-green green-shadow";
-break;
-case 3:
-cssClass= "bg-yellow yellow-shadow";
-break;
-case 4:
-cssClass= "bg-red red-shadow";
-break;
-}
-return cssClass;
-  }
-  customList=[];
-  constructor() {
-   var count:number=1;
-    for(let i=1;i<16;i++){
-      if(count>4){
-        count=1;
-      }
-
-      let myarr={
-        "Id":i.toString(),
-        "DisplayText":"Coaching Institutes",
-        "RedirectUrl":"dashboard"   ,
-        "Count": count 
-      }
-      this.customList.push(myarr);
-      count++;
-    }
-   
-
-   }
+  //   series: [{
+  //     name: 'User',
+  //     //data:[0, 4, 4]
+  //     data:   [10,25,3,48,5,6,79,8,93]
+  //   }]
+  // });
   ngOnInit() {
-    debugger
-      this.userName= localStorage.getItem('userName');
-     this.email= localStorage.getItem('email');
+   
   }
 
 }
 
-export interface customList{
-  Id:number;
-  DisplayText:string;
-  RedirectUrl:string;
-  Count:string;
-}

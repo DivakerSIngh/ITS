@@ -7,6 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {ProjectService} from '../service/project/project.service'
 import{Project} from '../model/project'
 import{SnackBar} from '../service/comman/snackBar'
+import { skip } from 'rxjs/operator/skip';
+import { PagerService } from '../service/paging/pager.service';
 
 
 declare var $: any;
@@ -29,15 +31,26 @@ export class ProjectComponent implements OnInit  {
   buttonText:String="Save And Add";
   projectList:Project[];
   filesToUpload: Array<File>;
-
+  searchObject: any = {};
+  limit:any;
+skip:any;
+pager: any = {};
   getDynamicClass(classNumber){
          return "bg-aqua";
+  }
+  inputRequestObject(obj) {
+    this.searchObject = {
+      limit: obj.limit || 10,
+      skip: obj.skip || 0,
+      filter: obj.filter
+    }
   }
   customList=[];
   constructor(private snackBar:SnackBar,private projectService:ProjectService,
     private loader:LoaderService,@Inject(DOCUMENT) private document: any, 
+   private pagerService: PagerService, 
   private elementRef:ElementRef) {
-this.getAll();
+
    this.saveProjectObject=new Project();
 
    var count:number=1;
@@ -71,9 +84,29 @@ this.getAll();
    
   }
   ngOnInit() {
-    
+    this.inputRequestObject({ limit: this.limit, skip: 0, filter: { name: 1 } });
+    this.limit = 10;
+    this.inReqObj({ limit: this.limit, skip: 0, filter: { name: 1 } });
+    this.setPage(1);
    
   }
+  setPage(page: number) {
+    if(page==this.pager.currentPage){
+      return;
+    }
+    if (page < 1 || page > this.pager.totalPages) {
+        return;
+    }
+    this.searchObject.skip = ((page - 1) * this.limit);
+    this.getAll(this.searchObject, page)
+}
+  inReqObj(o) {
+    this.searchObject = {
+        limit: o.limit || 10,
+        skip: o.skip || 0,
+        filter: o.filter
+    }
+}
   onFileChange(fileInput){
 
     let fileList: FileList = fileInput.target.files;
@@ -117,7 +150,8 @@ this.getAll();
       {
         this.modal="modal";
         this.snackBar.openSnackBar(data.message);
-       this.projectList= data.result;
+        this.getAll(this.searchObject,1)
+      // this.projectList= data.result;
        $('#costumModal3').modal('hide');
       }else{
         this.snackBar.openSnackBar(data.message);
@@ -132,6 +166,10 @@ this.getAll();
   clear(){
     this.saveProjectObject=new Project;
   }
+  showloader(){
+    debugger
+    this.loader.display(true);
+  }
   edit(project){
 debugger
 this.saveProjectObject._id=project._id;
@@ -143,17 +181,19 @@ this.saveProjectObject.percentComplete=project.percentComplete;
 this.saveProjectObject.reportingManagerId=project.reportingManagerId+'+'+project.reportingManagerName;
 
   }
-getAll(){
-  
+getAll(searchObject,page){
+  debugger
   this.loader.display(false);
-  this.projectService.getAll({}).subscribe((data) => {
+  this.projectService.getAll(searchObject).subscribe((data) => {
     if(data.statusCode==200)
     {
-      if(data.result.length>0) 
+      if(data.result.totalRecord >0) 
       this.snackBar.openSnackBar(data.message);
       else
       this.snackBar.openSnackBar('No data found');
-     this.projectList= data.result;
+     this.projectList= data.result.record;
+     this.pager.totalPages = data.result.totalRecord;
+    this.initPagination(data.result.totalRecord, page, this.limit);
     }else{
       this.snackBar.openSnackBar(data.message);
     }
@@ -163,6 +203,9 @@ getAll(){
    console.warn("error", error);
  });
 }
+initPagination(totalItems, page, pageSize) {
+ this.pager = this.pagerService.getPager(totalItems, page, pageSize);
+}
 delete(project){
   
   this.loader.display(false);
@@ -171,7 +214,8 @@ delete(project){
     if(data.statusCode==200)
     {
       this.snackBar.openSnackBar("Project Delete Successfull!");
-     this.projectList= data.result;
+    // this.projectList= data.result;
+    this.getAll(this.searchObject,1)
     }else{
       this.snackBar.openSnackBar(data.message);
     }

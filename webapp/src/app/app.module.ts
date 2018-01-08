@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { routes } from '../app.router';
 import { AppComponent } from './app.component';
+//import { ChartModule } from 'angular-highcharts';
 import{DashboardComponent}  from './dashboard/dashboard.component'
 // import { AgmCoreModule } from '@agm/core';
 import { LoginComponent } from './login/login.component';
@@ -26,6 +27,7 @@ import{LoaderService} from './service/comman/loader.service';
 import{AppService} from './service/app/app.service';
 import{AuthGuardService} from './service/comman/auth-guard.service';
 import{AccountService} from './service/account/account.service';
+import{PagerService} from './service/paging/pager.service';
 
 
 import {
@@ -60,7 +62,9 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatStepperModule,
-} from '@angular/material';
+  
+} from '@angular/material'
+import { HighchartsComponent } from './highcharts/highcharts.component';
 
 
 
@@ -78,7 +82,8 @@ import {
       HomeComponent,
       ProjectComponent,
       IssueComponent,
-      ChartComponent
+      ChartComponent,
+      HighchartsComponent
        
   ],
   imports: [
@@ -118,13 +123,13 @@ import {
       MatToolbarModule,
       MatTooltipModule,
       MatStepperModule,
-      
+      //ChartModule
       // AgmCoreModule.forRoot({
       //     apiKey: 'AIzaSyBlvmXi0cL76v48MHEAZDAyAPRU94ZCWOE'
       // })
   ],
   providers: [AuthenticationService,
-    LoaderService, ApplicationHeader,AppService,AuthGuardService,AccountService,
+    LoaderService, ApplicationHeader,PagerService,AppService,AuthGuardService,AccountService,
     UserService, AlertService,
      GlobalEventsManager
   ],
