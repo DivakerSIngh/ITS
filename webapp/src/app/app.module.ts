@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { routes } from '../app.router';
 import { AppComponent } from './app.component';
-//import { ChartModule } from 'angular-highcharts';
+import { ChartModule } from 'angular-highcharts';
 import{DashboardComponent}  from './dashboard/dashboard.component'
 // import { AgmCoreModule } from '@agm/core';
 import { LoginComponent } from './login/login.component';
@@ -123,7 +123,7 @@ import { HighchartsComponent } from './highcharts/highcharts.component';
       MatToolbarModule,
       MatTooltipModule,
       MatStepperModule,
-      //ChartModule
+      ChartModule
       // AgmCoreModule.forRoot({
       //     apiKey: 'AIzaSyBlvmXi0cL76v48MHEAZDAyAPRU94ZCWOE'
       // })

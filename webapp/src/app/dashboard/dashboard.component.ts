@@ -1,35 +1,59 @@
 import { Component, OnInit } from '@angular/core';
-//import { Chart } from 'angular-highcharts';
+import { Chart } from 'angular-highcharts';
+import {ProjectService} from '../service/project/project.service'
 
 @Component({
   selector: 'app-root',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  providers:[ProjectService]
 })
 export class DashboardComponent implements OnInit {
-  // chart: any = new Chart({
-  //   chart: {
-  //     type: 'line'
-  //   },
-  //   title: {
-  //     text: 'Dashboard Chart'
-  //   },
-  //   credits: {
-  //     enabled: true
-  //   },
-  //   xAxis: {
-  //     categories: [1,2,3,4,5,6,7,8,9]
-  //   },
-
-  //   series: [{
-  //     name: 'User',
-  //     //data:[0, 4, 4]
-  //     data:   [10,25,3,48,5,6,79,8,93]
-  //   }]
-  // });
-  ngOnInit() {
-   
+  searchObject:any = {
+    limit: 100,
+    skip:  0,
+    filter: []
   }
+  categories:any=[];
+  series:any=[];
+  chart: any
+  ngOnInit() {
+    
+  }
+  constructor(private projectService:ProjectService){
+    this.projectService.getAll(this.searchObject).subscribe((data) => {
+      debugger
+      for(let item of data.result.record){
+        this.categories.push(item.name)
+        this.series.push(item.percentComplete);
+        
+      }
+      console.log(this.categories)
+      console.log(this.series)
+      this.chart = new Chart({
+        chart: {
+          type: 'line'
+        },
+        title: {
+          text: 'Dashboard Chart'
+        },
+        credits: {
+          enabled: true
+        },
+        xAxis: {
+          categories: this.categories
+        },
+    
+        series: [{
+          name: 'User',
+          //data:[0, 4, 4]
+          data:   this.series
+        }]
+      });
+    })
+  }
+ 
+ 
 
 }
 
