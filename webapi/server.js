@@ -12,6 +12,7 @@ global.responseCode = require("./comman/responseCode");
 global.config = require('./config/config');
 global.uuid = require('uuid');
 
+
 //Parse incoming request bodies in a middleware before your handlers, available under the req.body property.
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({
@@ -38,7 +39,22 @@ app.use('/api', routes);
 
 
 var server = http.createServer(app);
+var io = require('socket.io')(server);
+console.log("io me aaaya");
+
+  io.on('connection', function(socket){
+    console.log('a user connected');
+    socket.on('disconnect', function(){
+      console.log('user disconnected');
+    });
+    socket.on('chat_message', function(msg){
+        console.log('message: ' + msg);
+      });
+  });
+ 
 server.listen(config.port || 5656, function() {
+
+
     db.on('error', console.error.bind(console, 'connected error'));
     db.on('open', function() {
         console.log('connected');
@@ -47,6 +63,7 @@ server.listen(config.port || 5656, function() {
     var port = server.address().port;
     console.log(config.port);
     console.log("App now running on port", "localhost://" + port);
+
 });
 
 app.get('/', function(req, res) {

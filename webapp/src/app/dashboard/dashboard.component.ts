@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart } from 'angular-highcharts';
+import { Chart,Highcharts } from 'angular-highcharts';
 import {ProjectService} from '../service/project/project.service'
 
 @Component({
@@ -48,7 +48,8 @@ export class DashboardComponent implements OnInit {
           name: 'User',
           //data:[0, 4, 4]
           data:   this.series
-        }]
+        }],
+       
       });
     })
   }

@@ -77,7 +77,7 @@ module.exports = {
         
         async.waterfall([
             function (callback) {
-                getProjectCount(searchObject, callback)
+                getProjectCount(searchObject, callback);
             },
             function (count, callback) {
                 let object = [];

@@ -39,7 +39,7 @@ logo:any;
   }
 login(loginRequest){
 debugger
-
+this.router.navigate(['/home']);
 this.accouuntService.login(loginRequest).subscribe((data) => {
     
     if(data.statusCode==200)
